@@ -1,0 +1,52 @@
+{% extends "core.html" %}
+
+{% block core_body%}
+<table>
+    <tr>
+        <td>
+            <div>
+                <form action="/" method="post">
+                    {% csrf_token %}
+                    <label for="textID">Write your text</label>
+                    <br>
+                    <textarea name="text" id="textID" cols="64" rows="10"></textarea>
+                    <br>
+                    <label for="imageUrlID">Paste Image URL</label>
+                    <br>
+                    <input type="url" name="image_url" id="imageUrlID" style="min-width: 520px;">
+                    <br>
+                    <br>
+                    <button class="mat-button mat-primary-button" type="submit">
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                {% if posts %}
+                <div>
+                    {% for post in posts %}
+                    <div class="post-item">
+                        <div>
+                            <img src="{{post.image_url}}" alt="Post-Image-{{post.id}}" />
+                            <p>{{post.text}}</p>
+                        </div>
+                        <div>
+                            <a href="{% url 'post-delete' post.id %}" style="color: red;">Delete</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <h2>Nothing posted yet...</h2>
+                {% endif %}
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+{% endblock core_body%}
